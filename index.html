@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>
+Are Calvin and Rachel Married Yet?
+</title>
+  <meta charset='utf-8'>
+    <meta property="og:title" content="Big"/>
+    <meta property="og:description" content="tells you whether Calvin W. Metcalf and Rachel A Linso are married yet"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <!--
+    style and most of this based off big by Tom MacWright
+	https://github.com/tmcw/big
+    -->
+<style>
+body {
+  font-family: 'Helvetica';
+  letter-spacing:-5px;
+  background:#fff;
+  background-size:100%;
+  color:#000;
+  margin:0;
+  padding:0;
+  font-weight:bold;
+}
+
+div {
+  position:absolute;
+  top:0px;
+  left:0px;
+  line-height:97%;
+
+}
+div.center{
+	  width:100%;
+}
+div#answer {
+  text-align:center;
+
+}
+
+</style>
+</head>
+<body><div class='center'>
+<div id='answer'  >
+</div></div>
+<script>
+
+ var i = 1e3;
+	   var div = document.getElementById('answer');
+	 
+        div.style.fontSize = i + 'px';
+        document.body.style.backgroundColor = div.style.backgroundColor;
+     
+ var date = new Date(2014,9,25,14);
+ var now = new Date();
+ var answer;
+ var timeDiff = Math.abs(date.getTime() - now.getTime());
+var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24))-1; 
+ if(now<date){
+ 	answer = '<h1>no</h1> '+diffDays+' days to go';
+ }else if (now>date){
+ 	answer = '<h1>yes</h1> for '+diffDays+' days now';
+ }
+ div.innerHTML = answer;
+
+ while (div.offsetWidth > window.innerWidth || div.offsetHeight > window.innerHeight) {
+		div.style.fontSize = (i -= i * 0.05) + 'px';
+		if (i < 0) {
+			break;
+		}
+	div.style.marginTop = ((window.innerHeight - div.offsetHeight) / 2) + 'px';}
+	div.style.position='relative'
+
+</script>
+</body>
+</html>
