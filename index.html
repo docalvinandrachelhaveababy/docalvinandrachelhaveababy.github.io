@@ -67,7 +67,7 @@ div#answer {
  var timeDiff = Math.abs(date.getTime() - now.getTime());
 var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)); 
  if(now<date){
- 	answer = '<h1>no</h1> check again in '+diffDays+' days';
+ 	answer = '<h1>no</h1> not for '+diffDays+' days';
  }else if (now>date){
  	answer = '<h1>yes</h1> for '+diffDays+' days now';
  }
