@@ -61,13 +61,13 @@ div#answer {
         div.style.fontSize = i + 'px';
         document.body.style.backgroundColor = div.style.backgroundColor;
      
- var date = new Date(2014,9,25,14);
+ var date = new Date(2014,9,25,0);
  var now = new Date();
  var answer;
  var timeDiff = Math.abs(date.getTime() - now.getTime());
-var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24))-1; 
+var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)); 
  if(now<date){
- 	answer = '<h1>no</h1> '+diffDays+' days to go';
+ 	answer = '<h1>no</h1> check again in '+diffDays+' days';
  }else if (now>date){
  	answer = '<h1>yes</h1> for '+diffDays+' days now';
  }
