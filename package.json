@@ -1,0 +1,26 @@
+{
+  "name": "arecalvinandrachelmarried.github.io",
+  "version": "0.0.0",
+  "description": "the final countdown for the rest of my life",
+  "main": "index.js",
+  "dependencies": {
+    "moment": "~2.7.0",
+    "vue": "~0.10.5"
+  },
+  "devDependencies": {
+    "browserify": "^4.2.0"
+  },
+  "scripts": {
+    "build": "browserify . > bundle.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/arecalvinandrachelmarried/arecalvinandrachelmarried.github.io.git"
+  },
+  "author": "Calvin Metcalf",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/arecalvinandrachelmarried/arecalvinandrachelmarried.github.io/issues"
+  },
+  "homepage": "https://github.com/arecalvinandrachelmarried/arecalvinandrachelmarried.github.io"
+}

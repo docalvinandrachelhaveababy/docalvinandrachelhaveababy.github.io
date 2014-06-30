@@ -51,35 +51,11 @@ div#answer {
 </script>
 </head>
 <body><div class='center'>
-<div id='answer'  >
+<div id='answer'>
 </div></div>
-<script>
+<script src='bundle.js'>
 
- var i = 1e3;
-	   var div = document.getElementById('answer');
-	 
-        div.style.fontSize = i + 'px';
-        document.body.style.backgroundColor = div.style.backgroundColor;
-     
- var date = new Date(2014,9,25,0);
- var now = new Date();
- var answer;
- var timeDiff = Math.abs(date.getTime() - now.getTime());
-var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)); 
- if(now<date){
- 	answer = '<h1>no</h1> not for '+diffDays+' days';
- }else if (now>date){
- 	answer = '<h1>yes</h1> for '+diffDays+' days now';
- }
- div.innerHTML = answer;
 
- while (div.offsetWidth > window.innerWidth || div.offsetHeight > window.innerHeight) {
-		div.style.fontSize = (i -= i * 0.05) + 'px';
-		if (i < 0) {
-			break;
-		}
-	div.style.marginTop = ((window.innerHeight - div.offsetHeight) / 2) + 'px';}
-	div.style.position='relative'
 
 </script>
 </body>
