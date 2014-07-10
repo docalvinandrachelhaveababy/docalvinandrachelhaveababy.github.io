@@ -5,8 +5,8 @@ var moment = require('moment');
 var vm = module.exports = new Vue({
   el: '#answer',
    template:[
-     '<span v-if="future"><h1>no</h1> not for {{{monthText}}} {{{dayText}}} {{{hourText}}} {{{minuteText}}} {{seccondText}} seconds</span>',
-     '<span v-if="past"><h1>yes</h1> for {{{monthText}}} {{{dayText}}} {{{hourText}}} {{{minuteText}}} {{seccondText}} seconds now</span>'
+     '<span v-if="future"><h1>no</h1> not for {{{monthText}}} {{{dayText}}} {{{hourText}}} {{{minuteText}}} {{seccondText}}</span>',
+     '<span v-if="past"><h1>yes</h1> for {{{monthText}}} {{{dayText}}} {{{hourText}}} {{{minuteText}}} {{seccondText}} now</span>'
    ].join(''),
   data: {
     date: moment('10-25-2014 14:00 -0400', 'MM-DD-YYYY HH:mm Z').format(),
@@ -24,7 +24,7 @@ var vm = module.exports = new Vue({
     },
     monthText: function () {
       if (this.months) {
-        return Math.abs(this.months) + ' months,';
+        return Math.abs(this.months) + ' month' + (Math.abs(this.months) === 1 ?',':'s,');
       }
     },
     days: function () {
@@ -32,7 +32,7 @@ var vm = module.exports = new Vue({
     },
     dayText: function () {
       if (this.days) {
-        return Math.abs(this.days) + ' days,';
+        return Math.abs(this.days) + ' day' + (Math.abs(this.days) === 1 ?',':'s,');
       }
     },
     hours: function () {
@@ -40,7 +40,7 @@ var vm = module.exports = new Vue({
     },
     hourText: function () {
       if (this.hours) {
-        return Math.abs(this.hours) + ' hours, ';
+        return Math.abs(this.hours) + ' hour' + (Math.abs(this.hours) === 1 ?',':'s,');
       }
     },
     minutes: function () {
@@ -48,7 +48,7 @@ var vm = module.exports = new Vue({
     },
     minuteText: function () {
       if (this.minutes) {
-        return Math.abs(this.minutes) + ' minutes,';
+        return Math.abs(this.minutes) + ' minute' + (Math.abs(this.minute) === 1 ?',':'s,');
       }
     },
     seconds: function () {
@@ -59,7 +59,7 @@ var vm = module.exports = new Vue({
         .add('m', this.minutes), 'seconds');
     },
     seccondText: function () {
-      return Math.abs(this.seconds);
+      return Math.abs(this.seconds) + ' second' + (Math.abs(this.seconds) === 1 ?'':'s');
     }
   }
 });
