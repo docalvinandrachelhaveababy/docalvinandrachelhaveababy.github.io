@@ -68,7 +68,7 @@ window.moment = moment;
 function setNow() {
   vm.now = moment().format();
 }
-setInterval(setNow, 1000);
+setInterval(setNow, 500);
 setNow();
 },{"moment":3,"vue":24}],2:[function(require,module,exports){
 var vm = require('./component');

@@ -67,5 +67,5 @@ window.moment = moment;
 function setNow() {
   vm.now = moment().format();
 }
-setInterval(setNow, 1000);
+setInterval(setNow, 500);
 setNow();
