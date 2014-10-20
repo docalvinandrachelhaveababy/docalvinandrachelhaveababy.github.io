@@ -1,7 +1,7 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 var Vue = require('vue');
 var moment = require('moment');
-
+var body = document.getElementsByTagName('body')[0];
 var vm = module.exports = new Vue({
   el: '#answer',
    template:[
@@ -67,6 +67,10 @@ window.vm = vm;
 window.moment = moment;
 function setNow() {
   vm.now = moment().format();
+  if(vm.past && body.classList[0] === 'before') {
+    body.classList.remove('before');
+    body.classList.add('after');
+  }
 }
 setInterval(setNow, 500);
 setNow();
@@ -76,7 +80,7 @@ var i = 1e3;
 var div = document.getElementById('answer');
 
 div.style.fontSize = i + 'px';
-document.body.style.backgroundColor = div.style.backgroundColor;
+//document.body.style.backgroundColor = div.style.backgroundColor;
 
 while (div.offsetWidth > window.innerWidth || div.offsetHeight > window.innerHeight) {
 div.style.fontSize = (i -= i * 0.05) + 'px';

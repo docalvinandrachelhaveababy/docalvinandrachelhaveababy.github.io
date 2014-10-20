@@ -3,7 +3,7 @@ var i = 1e3;
 var div = document.getElementById('answer');
 
 div.style.fontSize = i + 'px';
-document.body.style.backgroundColor = div.style.backgroundColor;
+//document.body.style.backgroundColor = div.style.backgroundColor;
 
 while (div.offsetWidth > window.innerWidth || div.offsetHeight > window.innerHeight) {
 div.style.fontSize = (i -= i * 0.05) + 'px';

@@ -16,14 +16,20 @@ Are Calvin and Rachel Married Yet?
 body {
   font-family: 'Helvetica';
   letter-spacing:-5px;
-  background:#fff;
   background-size:100%;
-  color:#000;
   margin:0;
   padding:0;
   font-weight:bold;
 }
 
+.before {
+  background:#fff;
+  color:#000;
+}
+.after {
+  background:#000;
+  color:#fff;
+}
 div {
   position:absolute;
   top:0px;
@@ -50,7 +56,7 @@ div#answer {
 
 </script>
 </head>
-<body><div class='center'>
+<body class="before"><div class='center'>
 <div id='answer'>
 </div></div>
 <script src='bundle.js'>

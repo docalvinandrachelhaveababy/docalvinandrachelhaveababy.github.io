@@ -1,6 +1,6 @@
 var Vue = require('vue');
 var moment = require('moment');
-
+var body = document.getElementsByTagName('body')[0];
 var vm = module.exports = new Vue({
   el: '#answer',
    template:[
@@ -66,6 +66,10 @@ window.vm = vm;
 window.moment = moment;
 function setNow() {
   vm.now = moment().format();
+  if(vm.past && body.classList[0] === 'before') {
+    body.classList.remove('before');
+    body.classList.add('after');
+  }
 }
 setInterval(setNow, 500);
 setNow();
