@@ -5,8 +5,8 @@ var body = document.getElementsByTagName('body')[0];
 var vm = module.exports = new Vue({
   el: '#answer',
    template:[
-     '<span v-if="future"><h1>no</h1> not for {{{monthText}}} {{{dayText}}} {{{hourText}}} {{{minuteText}}} {{seccondText}}</span>',
-     '<span v-if="past"><h1>yes</h1> for {{{monthText}}} {{{dayText}}} {{{hourText}}} {{{minuteText}}} {{seccondText}} now</span>'
+     '<span v-if="future"><h1>no</h1> not for {{{yearText}}} {{{monthText}}} {{{dayText}}} {{{hourText}}} {{{minuteText}}} {{seccondText}}</span>',
+     '<span v-if="past"><h1>yes</h1> for {{{yearText}}} {{{monthText}}} {{{dayText}}} {{{hourText}}} {{{minuteText}}} {{seccondText}} now</span>'
    ].join(''),
   data: {
     date: moment('10-25-2014 14:00 -0400', 'MM-DD-YYYY HH:mm Z').format(),
@@ -19,8 +19,16 @@ var vm = module.exports = new Vue({
     future: function () {
       return moment(this.now).isBefore(this.date);
     },
+    years: function () {
+      return moment(this.date).diff(moment(this.now), 'years');
+    },
+    yearText: function () {
+      if (this.years) {
+        return Math.abs(this.years) + ' year' + (Math.abs(this.years) === 1 ?',':'s,');
+      }
+    },
     months: function () {
-      return moment(this.date).diff(moment(this.now), 'months');
+      return moment(this.date).diff(moment(this.now).add('y', this.years), 'months');
     },
     monthText: function () {
       if (this.months) {
@@ -28,7 +36,7 @@ var vm = module.exports = new Vue({
       }
     },
     days: function () {
-      return moment(this.date).diff(moment(this.now).add('M', this.months), 'days');
+      return moment(this.date).diff(moment(this.now).add('y', this.years).add('M', this.months), 'days');
     },
     dayText: function () {
       if (this.days) {
@@ -36,7 +44,7 @@ var vm = module.exports = new Vue({
       }
     },
     hours: function () {
-      return moment(this.date).diff(moment(this.now).add('M', this.months).add('d', this.days), 'hours');
+      return moment(this.date).diff(moment(this.now).add('y', this.years).add('M', this.months).add('d', this.days), 'hours');
     },
     hourText: function () {
       if (this.hours) {
@@ -44,7 +52,7 @@ var vm = module.exports = new Vue({
       }
     },
     minutes: function () {
-      return moment(this.date).diff(moment(this.now).add('M', this.months).add('d', this.days).add('h', this.hours), 'minutes');
+      return moment(this.date).diff(moment(this.now).add('y', this.years).add('M', this.months).add('d', this.days).add('h', this.hours), 'minutes');
     },
     minuteText: function () {
       if (this.minutes) {
@@ -53,6 +61,7 @@ var vm = module.exports = new Vue({
     },
     seconds: function () {
       return moment(this.date).diff(moment(this.now)
+        .add('y', this.years)
         .add('M', this.months)
         .add('d', this.days)
         .add('h', this.hours)
@@ -74,6 +83,7 @@ function setNow() {
 }
 setInterval(setNow, 500);
 setNow();
+
 },{"moment":3,"vue":24}],2:[function(require,module,exports){
 var vm = require('./component');
 var i = 1e3;
