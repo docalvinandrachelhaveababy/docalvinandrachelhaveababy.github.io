@@ -9,7 +9,7 @@ var vm = module.exports = new Vue({
      '<span v-if="past"><h1>yes</h1> for {{{yearText}}} {{{monthText}}} {{{dayText}}} {{{hourText}}} {{{minuteText}}} {{seccondText}} now</span>'
    ].join(''),
   data: {
-    date: moment('10-25-2014 14:00 -0400', 'MM-DD-YYYY HH:mm Z').format(),
+    date: moment('07-03-2019 08:30 -0400', 'MM-DD-YYYY HH:mm Z').format(),
     now: moment().format()
   },
   computed: {
@@ -2759,7 +2759,7 @@ BatcherProto.reset = function () {
 }
 
 module.exports = Batcher
-},{"./utils":28}],5:[function(require,module,exports){
+},{"./utils":29}],5:[function(require,module,exports){
 var Batcher        = require('./batcher'),
     bindingBatcher = new Batcher(),
     bindingId      = 1
@@ -3901,7 +3901,7 @@ function getRoot (compiler) {
 }
 
 module.exports = Compiler
-},{"./binding":5,"./config":7,"./deps-parser":8,"./directive":9,"./emitter":20,"./exp-parser":21,"./observer":25,"./text-parser":26,"./utils":28,"./viewmodel":29}],7:[function(require,module,exports){
+},{"./binding":5,"./config":7,"./deps-parser":8,"./directive":9,"./emitter":20,"./exp-parser":21,"./observer":25,"./text-parser":27,"./utils":29,"./viewmodel":30}],7:[function(require,module,exports){
 var TextParser = require('./text-parser')
 
 module.exports = {
@@ -3921,7 +3921,7 @@ Object.defineProperty(module.exports, 'delimiters', {
         TextParser.setDelimiters(delimiters)
     }
 })
-},{"./text-parser":26}],8:[function(require,module,exports){
+},{"./text-parser":27}],8:[function(require,module,exports){
 var Emitter  = require('./emitter'),
     utils    = require('./utils'),
     Observer = require('./observer'),
@@ -3987,7 +3987,7 @@ module.exports = {
     }
     
 }
-},{"./emitter":20,"./observer":25,"./utils":28}],9:[function(require,module,exports){
+},{"./emitter":20,"./observer":25,"./utils":29}],9:[function(require,module,exports){
 var dirId           = 1,
     ARG_RE          = /^[\w\$-]+$/,
     FILTER_TOKEN_RE = /[^\s'"]+|'[^']+'|"[^"]+"/g,
@@ -4246,7 +4246,7 @@ function escapeQuote (v) {
 }
 
 module.exports = Directive
-},{"./text-parser":26}],10:[function(require,module,exports){
+},{"./text-parser":27}],10:[function(require,module,exports){
 var utils = require('../utils'),
     slice = [].slice
 
@@ -4288,7 +4288,7 @@ module.exports = {
         parent.insertBefore(frag, this.el)
     }
 }
-},{"../utils":28}],11:[function(require,module,exports){
+},{"../utils":29}],11:[function(require,module,exports){
 var utils    = require('../utils')
 
 /**
@@ -4345,7 +4345,7 @@ module.exports = {
         }
     }
 }
-},{"../utils":28}],12:[function(require,module,exports){
+},{"../utils":29}],12:[function(require,module,exports){
 var utils      = require('../utils'),
     config     = require('../config'),
     transition = require('../transition'),
@@ -4475,7 +4475,7 @@ directives.html    = require('./html')
 directives.style   = require('./style')
 directives.partial = require('./partial')
 directives.view    = require('./view')
-},{"../config":7,"../transition":27,"../utils":28,"./html":10,"./if":11,"./model":13,"./on":14,"./partial":15,"./repeat":16,"./style":17,"./view":18,"./with":19}],13:[function(require,module,exports){
+},{"../config":7,"../transition":28,"../utils":29,"./html":10,"./if":11,"./model":13,"./on":14,"./partial":15,"./repeat":16,"./style":17,"./view":18,"./with":19}],13:[function(require,module,exports){
 var utils = require('../utils'),
     isIE9 = navigator.userAgent.indexOf('MSIE 9.0') > 0,
     filter = [].filter
@@ -4650,7 +4650,7 @@ module.exports = {
         }
     }
 }
-},{"../utils":28}],14:[function(require,module,exports){
+},{"../utils":29}],14:[function(require,module,exports){
 var utils    = require('../utils')
 
 /**
@@ -4699,7 +4699,9 @@ module.exports = {
         var el = this.iframeBind
             ? this.el.contentWindow
             : this.el
-        el.removeEventListener(this.arg, this.handler)
+        if (this.handler) {
+            el.removeEventListener(this.arg, this.handler)
+        }
     },
 
     unbind: function () {
@@ -4707,7 +4709,7 @@ module.exports = {
         this.el.removeEventListener('load', this.iframeBind)
     }
 }
-},{"../utils":28}],15:[function(require,module,exports){
+},{"../utils":29}],15:[function(require,module,exports){
 var utils = require('../utils')
 
 /**
@@ -4758,7 +4760,7 @@ module.exports = {
     }
 
 }
-},{"../utils":28}],16:[function(require,module,exports){
+},{"../utils":29}],16:[function(require,module,exports){
 var utils      = require('../utils'),
     config     = require('../config')
 
@@ -5005,7 +5007,7 @@ function indexOf (vms, obj) {
     }
     return -1
 }
-},{"../config":7,"../utils":28}],17:[function(require,module,exports){
+},{"../config":7,"../utils":29}],17:[function(require,module,exports){
 var prefixes = ['-webkit-', '-moz-', '-ms-']
 
 /**
@@ -5025,13 +5027,19 @@ module.exports = {
     },
 
     update: function (value) {
-        var prop = this.prop
+        var prop = this.prop,
+            isImportant
+        /* jshint eqeqeq: true */
+        // cast possible numbers/booleans into strings
+        if (value != null) value += ''
         if (prop) {
-            var isImportant = value.slice(-10) === '!important'
-                ? 'important'
-                : ''
-            if (isImportant) {
-                value = value.slice(0, -10).trim()
+            if (value) {
+                isImportant = value.slice(-10) === '!important'
+                    ? 'important'
+                    : ''
+                if (isImportant) {
+                    value = value.slice(0, -10).trim()
+                }
             }
             this.el.style.setProperty(prop, value, isImportant)
             if (this.prefixed) {
@@ -5154,7 +5162,7 @@ module.exports = {
     }
 
 }
-},{"../utils":28}],20:[function(require,module,exports){
+},{"../utils":29}],20:[function(require,module,exports){
 var slice = [].slice
 
 function Emitter (ctx) {
@@ -5443,7 +5451,7 @@ exports.eval = function (exp, compiler, data) {
     }
     return res
 }
-},{"./utils":28}],22:[function(require,module,exports){
+},{"./utils":29}],22:[function(require,module,exports){
 var utils    = require('./utils'),
     get      = utils.get,
     slice    = [].slice,
@@ -5481,6 +5489,7 @@ filters.lowercase = function (value) {
  *  12345 => $12,345.00
  */
 filters.currency = function (value, sign) {
+    value = parseFloat(value)
     if (!value && value !== 0) return ''
     sign = sign || '$'
     var s = Math.floor(value).toString(),
@@ -5634,7 +5643,7 @@ function stripQuotes (str) {
         return str.slice(1, -1)
     }
 }
-},{"./utils":28}],23:[function(require,module,exports){
+},{"./utils":29}],23:[function(require,module,exports){
 // string -> DOM conversion
 // wrappers originally from jQuery, scooped from component/domify
 var map = {
@@ -5667,29 +5676,12 @@ map.rect = [1, '<svg xmlns="http://www.w3.org/2000/svg" version="1.1">','</svg>'
 
 var TAG_RE = /<([\w:]+)/
 
-module.exports = function (template) {
-
-    if (typeof template !== 'string') {
-        return template
-    }
-
-    // template by ID
-    if (template.charAt(0) === '#') {
-        var templateNode = document.getElementById(template.slice(1))
-        if (!templateNode) return
-        // if its a template tag and the browser supports it,
-        // its content is already a document fragment!
-        if (templateNode.tagName === 'TEMPLATE' && templateNode.content) {
-            return templateNode.content
-        }
-        template = templateNode.innerHTML
-    }
-
+module.exports = function (templateString) {
     var frag = document.createDocumentFragment(),
-        m = TAG_RE.exec(template)
+        m = TAG_RE.exec(templateString)
     // text only
     if (!m) {
-        frag.appendChild(document.createTextNode(template))
+        frag.appendChild(document.createTextNode(templateString))
         return frag
     }
 
@@ -5700,7 +5692,7 @@ module.exports = function (template) {
         suffix = wrap[2],
         node = document.createElement('div')
 
-    node.innerHTML = prefix + template.trim() + suffix
+    node.innerHTML = prefix + templateString.trim() + suffix
     while (depth--) node = node.lastChild
 
     // one element
@@ -5724,12 +5716,14 @@ var config      = require('./config'),
     ViewModel   = require('./viewmodel'),
     utils       = require('./utils'),
     makeHash    = utils.hash,
-    assetTypes  = ['directive', 'filter', 'partial', 'effect', 'component']
-
-// require these so Browserify can catch them
-// so they can be used in Vue.require
-require('./observer')
-require('./transition')
+    assetTypes  = ['directive', 'filter', 'partial', 'effect', 'component'],
+    // Internal modules that are exposed for plugins
+    pluginAPI   = {
+        utils: utils,
+        config: config,
+        transition: require('./transition'),
+        observer: require('./observer')
+    }
 
 ViewModel.options = config.globalAssets = {
     directives  : require('./directives'),
@@ -5750,7 +5744,7 @@ assetTypes.forEach(function (type) {
         }
         if (!value) return hash[id]
         if (type === 'partial') {
-            value = utils.toFragment(value)
+            value = utils.parseTemplateOption(value)
         } else if (type === 'component') {
             value = utils.toConstructor(value)
         } else if (type === 'filter') {
@@ -5805,8 +5799,8 @@ ViewModel.use = function (plugin) {
 /**
  *  Expose internal modules for plugins
  */
-ViewModel.require = function (path) {
-    return require('./' + path)
+ViewModel.require = function (module) {
+    return pluginAPI[module]
 }
 
 ViewModel.extend = extend
@@ -5906,7 +5900,7 @@ function inheritOptions (child, parent, topLevel) {
 }
 
 module.exports = ViewModel
-},{"./config":7,"./directives":12,"./filters":22,"./observer":25,"./transition":27,"./utils":28,"./viewmodel":29}],25:[function(require,module,exports){
+},{"./config":7,"./directives":12,"./filters":22,"./observer":25,"./transition":28,"./utils":29,"./viewmodel":30}],25:[function(require,module,exports){
 /* jshint proto:true */
 
 var Emitter  = require('./emitter'),
@@ -6353,7 +6347,55 @@ var pub = module.exports = {
     convert     : convert,
     convertKey  : convertKey
 }
-},{"./emitter":20,"./utils":28}],26:[function(require,module,exports){
+},{"./emitter":20,"./utils":29}],26:[function(require,module,exports){
+var toFragment = require('./fragment');
+
+/**
+ * Parses a template string or node and normalizes it into a
+ * a node that can be used as a partial of a template option
+ *
+ * Possible values include
+ * id selector: '#some-template-id'
+ * template string: '<div><span>my template</span></div>'
+ * DocumentFragment object
+ * Node object of type Template
+ */
+module.exports = function(template) {
+    var templateNode;
+
+    if (template instanceof window.DocumentFragment) {
+        // if the template is already a document fragment -- do nothing
+        return template
+    }
+
+    if (typeof template === 'string') {
+        // template by ID
+        if (template.charAt(0) === '#') {
+            templateNode = document.getElementById(template.slice(1))
+            if (!templateNode) return
+        } else {
+            return toFragment(template)
+        }
+    } else if (template.nodeType) {
+        templateNode = template
+    } else {
+        return
+    }
+
+    // if its a template tag and the browser supports it,
+    // its content is already a document fragment!
+    if (templateNode.tagName === 'TEMPLATE' && templateNode.content) {
+        return templateNode.content
+    }
+
+    if (templateNode.tagName === 'SCRIPT') {
+        return toFragment(templateNode.innerHTML)
+    }
+
+    return toFragment(templateNode.outerHTML);
+}
+
+},{"./fragment":23}],27:[function(require,module,exports){
 var openChar        = '{',
     endChar         = '}',
     ESCAPE_RE       = /[-.*+?^${}()|[\]\/\\]/g,
@@ -6450,7 +6492,7 @@ exports.parse         = parse
 exports.parseAttr     = parseAttr
 exports.setDelimiters = setDelimiters
 exports.delimiters    = [openChar, endChar]
-},{"./directive":9}],27:[function(require,module,exports){
+},{"./directive":9}],28:[function(require,module,exports){
 var endEvents  = sniffEndEvents(),
     config     = require('./config'),
     // batch enter animations so we only force the layout once
@@ -6679,7 +6721,7 @@ function sniffEndEvents () {
 // Expose some stuff for testing purposes
 transition.codes = codes
 transition.sniff = sniffEndEvents
-},{"./batcher":4,"./config":7}],28:[function(require,module,exports){
+},{"./batcher":4,"./config":7}],29:[function(require,module,exports){
 var config       = require('./config'),
     toString     = ({}).toString,
     win          = window,
@@ -6713,6 +6755,11 @@ var utils = module.exports = {
      *  Convert a string template to a dom fragment
      */
     toFragment: require('./fragment'),
+
+    /**
+     *  Parse the various types of template options
+     */
+    parseTemplateOption: require('./template-parser.js'),
 
     /**
      *  get a value from an object keypath
@@ -6908,7 +6955,7 @@ var utils = module.exports = {
         }
         if (partials) {
             for (key in partials) {
-                partials[key] = utils.toFragment(partials[key])
+                partials[key] = utils.parseTemplateOption(partials[key])
             }
         }
         if (filters) {
@@ -6917,7 +6964,7 @@ var utils = module.exports = {
             }
         }
         if (template) {
-            options.template = utils.toFragment(template)
+            options.template = utils.parseTemplateOption(template)
         }
     },
 
@@ -7001,7 +7048,7 @@ function enableDebug () {
         }
     }
 }
-},{"./config":7,"./fragment":23,"./viewmodel":29}],29:[function(require,module,exports){
+},{"./config":7,"./fragment":23,"./template-parser.js":26,"./viewmodel":30}],30:[function(require,module,exports){
 var Compiler   = require('./compiler'),
     utils      = require('./utils'),
     transition = require('./transition'),
@@ -7020,13 +7067,23 @@ var Compiler   = require('./compiler'),
  *  and a few reserved methods
  */
 function ViewModel (options) {
-    // just compile. options are passed directly to compiler
+    // compile if options passed, if false return. options are passed directly to compiler
+    if (options === false) return
     new Compiler(this, options)
 }
 
 // All VM prototype methods are inenumerable
 // so it can be stringified/looped through as raw data
 var VMProto = ViewModel.prototype
+
+/**
+ *  init allows config compilation after instantiation:
+ *    var a = new Vue(false)
+ *    a.init(config)
+ */
+def(VMProto, '$init', function (options) {
+    new Compiler(this, options)
+})
 
 /**
  *  Convenience function to get a value from
@@ -7085,8 +7142,8 @@ def(VMProto, '$unwatch', function (key, callback) {
 /**
  *  unbind everything, remove everything
  */
-def(VMProto, '$destroy', function () {
-    this.$compiler.destroy()
+def(VMProto, '$destroy', function (noRemove) {
+    this.$compiler.destroy(noRemove)
 })
 
 /**
@@ -7182,4 +7239,5 @@ function query (el) {
 }
 
 module.exports = ViewModel
-},{"./batcher":4,"./compiler":6,"./transition":27,"./utils":28}]},{},[2])
+
+},{"./batcher":4,"./compiler":6,"./transition":28,"./utils":29}]},{},[2])
