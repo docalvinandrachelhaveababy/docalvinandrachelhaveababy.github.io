@@ -8,7 +8,7 @@ var vm = module.exports = new Vue({
      '<span v-if="past"><h1>yes</h1> for {{{yearText}}} {{{monthText}}} {{{dayText}}} {{{hourText}}} {{{minuteText}}} {{seccondText}} now</span>'
    ].join(''),
   data: {
-    date: moment('07-03-2019 08:30 -0400', 'MM-DD-YYYY HH:mm Z').format(),
+    date: moment('06-20-2019 20:31 -0400', 'MM-DD-YYYY HH:mm Z').format(),
     now: moment().format()
   },
   computed: {
