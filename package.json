@@ -4,7 +4,7 @@
   "description": "the final countdown for the rest of my life",
   "main": "index.js",
   "dependencies": {
-    "moment": "~2.7.0",
+    "moment": "~2.29.2",
     "vue": "~0.10.5"
   },
   "devDependencies": {
